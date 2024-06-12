@@ -2,11 +2,43 @@
 Created on 12th June 2024
 
 @author: raiktin on GitHub
+@version: 1.0
 
-usage: executing this program opens a GUI where the user can upload an image to convert it into an array or upload a
-        .txt file to convert it into an image
+Nutzung:
+
+    Wenn man das Programm startet erscheint eine Benutzeroberflaeche, dort kann man eine Bilddatei
+    hochladen um diese in eine .txt-Datei zu konvertieren, welche das Bild als Array darstellt. Laedt man eine
+    solche .txt-Datei hoch, transformiert das Programe diese wieder zu einem Bild zurueck
 
 
+Installation:
+
+    Man benoetigt die verschiedenen Bibliotheken damit das Programm laueft, dafür sollte man erstmal
+    versuchen diese ueber die IDE zu installieren (drüber hovern -> install package)
+    Es kann allerdings vorkommen, dass PIL (pillow) Probleme macht, Fix siehe 'PIL fix'
+
+
+PIL fix:
+
+    Folgenden Befehl in das Terminal schreiben:
+
+        'py -m pip install --upgrade Pillow'
+
+    Sollten hier Probleme auftreten wird es vermutlich an pip liegen, ab hier muss man individuell schauen was die
+    Fehlermeldungen sagen. Exemplarisch kann man unter 'pip fix' eine grobe Anleitung finden
+
+
+pip fix:
+
+    Zunaechst wechselt man im Terminal zu dem Ordner wo man lokal python gespeichert hat
+
+        'cd C:\Users\*username here*\AppData\Local\Programs\Python\Python312\' bei mir unter Windows
+
+    Danach installiert man pip (auch wieder im Terminal)
+
+        'py -m pip install --upgrade pip'
+
+    Danache sollte man Pillow installieren können
 
 """
 
