@@ -32,7 +32,7 @@ pip fix:
 
     Zunaechst wechselt man im Terminal zu dem Ordner wo man lokal python gespeichert hat
 
-        'cd C:\Users\*username here*\AppData\Local\Programs\Python\Python312\' bei mir unter Windows
+        'cd C:\\Users\\*username here*\\AppData\\Local\\Programs\\Python\\Python312\\' bei mir unter Windows
 
     Danach installiert man pip (auch wieder im Terminal)
 
@@ -101,19 +101,22 @@ def read_array(path):
                 array1D.append(value)
     return np.resize(np.asarray(array1D, dtype=np.uint8), (len(array1D),))
 
+def upload_file():
+    global file_path
+    file_path = filedialog.askopenfilename(title="Wähle eine Datei aus", filetypes=[("Alle Dateien", "*.*"), ("Textdateien", "*.txt"), ("Bilddateien", "*.bmp *.png *.jpg")])
+    if file_path:
+        file_label.config(text=os.path.basename(file_path))
 
 def transform():
-    path = filedialog.askopenfilename(title="Wähle eine Datei aus",
-                                      filetypes=[("Alle Dateien", "*.*"), ("Textdateien", "*.txt"),
-                                                 ("Bilddateien", "*.bmp *.png *.jpg")])
-    if not path:
+    if not file_path:
+        messagebox.showerror("Fehler", "Bitte lade zuerst eine Datei hoch.")
         return
 
-    ext = os.path.splitext(path)[1].lower()
+    ext = os.path.splitext(file_path)[1].lower()
     if ext == '.txt':
-        array = read_array(path)
+        array = read_array(file_path)
         image = array_to_image(array)
-        new_path = os.path.splitext(path)[0] + "_.png"
+        new_path = os.path.splitext(file_path)[0] + "_.png"
         image.save(new_path)
         messagebox.showinfo("Erfolgreich", "Transformation von Datendatei zu Bild war erfolgreich.")
     elif ext in ['.png', '.jpg', '.jpeg', '.bmp']:
@@ -121,25 +124,26 @@ def transform():
         if size == 0:
             messagebox.showerror("Fehler", "Bitte wähle zuerst eine Auflösung aus.")
             return
-        image = load_greyscale(path)
+        image = load_greyscale(file_path)
         image = resize_image(image, size)
         array = image_to_array(image)
-        new_path = os.path.splitext(path)[0] + ".txt"
+        new_path = os.path.splitext(file_path)[0] + ".txt"
         write_array(array, new_path)
         messagebox.showinfo("Erfolgreich", "Transformation von Bild zu Datendatei war erfolgreich.")
     else:
         messagebox.showerror("Fehler", "Bitte wähle zuerst ein Bild oder eine Textdatei aus.")
 
-
 root = tk.Tk()
 root.title("Bild-Daten-Transformation")
 
-label = tk.Label(root,
-                 text="Transformation eines (Grau-)Bilds (*.bmp, *.png, *.jpg) in eine Datendatei (*.txt) und umgekehrt")
+label = tk.Label(root, text="Transformation eines (Grau-)Bilds (*.bmp, *.png, *.jpg) in eine Datendatei (*.txt) und umgekehrt")
 label.pack(pady=10)
 
-upload_button = tk.Button(root, text="Datei hochladen", command=transform)
+upload_button = tk.Button(root, text="Datei hochladen", command=upload_file)
 upload_button.pack(pady=20)
+
+file_label = tk.Label(root, text="Keine Datei ausgewählt")
+file_label.pack(pady=5)
 
 resolution_label = tk.Label(root, text="Wähle eine Auflösung (quadratisch):")
 resolution_label.pack(pady=10)
@@ -147,7 +151,12 @@ resolution_label.pack(pady=10)
 resolution_var = tk.StringVar()
 resolution_combobox = ttk.Combobox(root, textvariable=resolution_var, state="readonly")
 resolution_combobox['values'] = [2 ** x for x in range(4, 13)]
-resolution_combobox.current(4)  # Set default value to 256
+resolution_combobox.current(0)  # Set default value to 16
 resolution_combobox.pack(pady=10)
+
+transform_button = tk.Button(root, text="Transformieren", command=transform)
+transform_button.pack(pady=20)
+
+file_path = ""
 
 root.mainloop()
