@@ -1,3 +1,16 @@
+"""
+Created on 12th June 2024
+
+@author: raiktin on GitHub
+
+usage: executing this program opens a GUI where the user can upload an image to convert it into an array or upload a
+        .txt file to convert it into an image
+
+
+
+"""
+
+
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from PIL import Image
