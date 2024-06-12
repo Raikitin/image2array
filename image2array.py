@@ -2,7 +2,7 @@
 Created on 12th June 2024
 
 @author: raiktin on GitHub
-@version: 1.0
+@version: 1.2
 
 Nutzung:
 
@@ -101,49 +101,55 @@ def read_array(path):
                 array1D.append(value)
     return np.resize(np.asarray(array1D, dtype=np.uint8), (len(array1D),))
 
-def upload_file():
-    global file_path
-    file_path = filedialog.askopenfilename(title="Wähle eine Datei aus", filetypes=[("Alle Dateien", "*.*"), ("Textdateien", "*.txt"), ("Bilddateien", "*.bmp *.png *.jpg")])
-    if file_path:
-        file_label.config(text=os.path.basename(file_path))
+def upload_files():
+    global file_paths
+    file_paths = filedialog.askopenfilenames(title="Wähle Dateien aus", filetypes=[("Alle Dateien", "*.*"), ("Textdateien", "*.txt"), ("Bilddateien", "*.bmp *.png *.jpg")])
+    if file_paths:
+        file_list_label.config(text="\n".join([os.path.basename(path) for path in file_paths]))
+
 
 def transform():
-    if not file_path:
-        messagebox.showerror("Fehler", "Bitte lade zuerst eine Datei hoch.")
+    if not file_paths:
+        messagebox.showerror("Fehler", "Bitte lade zuerst Dateien hoch.")
         return
 
-    ext = os.path.splitext(file_path)[1].lower()
-    if ext == '.txt':
-        array = read_array(file_path)
-        image = array_to_image(array)
-        new_path = os.path.splitext(file_path)[0] + "_.png"
-        image.save(new_path)
-        messagebox.showinfo("Erfolgreich", "Transformation von Datendatei zu Bild war erfolgreich.")
-    elif ext in ['.png', '.jpg', '.jpeg', '.bmp']:
-        size = int(resolution_var.get())
-        if size == 0:
-            messagebox.showerror("Fehler", "Bitte wähle zuerst eine Auflösung aus.")
-            return
-        image = load_greyscale(file_path)
-        image = resize_image(image, size)
-        array = image_to_array(image)
-        new_path = os.path.splitext(file_path)[0] + ".txt"
-        write_array(array, new_path)
-        messagebox.showinfo("Erfolgreich", "Transformation von Bild zu Datendatei war erfolgreich.")
-    else:
-        messagebox.showerror("Fehler", "Bitte wähle zuerst ein Bild oder eine Textdatei aus.")
+    size = int(resolution_var.get())
+    if size == 0:
+        messagebox.showerror("Fehler", "Bitte wähle zuerst eine Auflösung aus.")
+        return
+
+    for path in file_paths:
+        ext = os.path.splitext(path)[1].lower()
+        if ext == '.txt':
+            array = read_array(path)
+            image = array_to_image(array)
+            new_path = os.path.splitext(path)[0] + "_.png"
+            image.save(new_path)
+        elif ext in ['.png', '.jpg', '.jpeg', '.bmp']:
+            image = load_greyscale(path)
+            image = resize_image(image, size)
+            array = image_to_array(image)
+            new_path = os.path.splitext(path)[0] + ".txt"
+            write_array(array, new_path)
+        else:
+            messagebox.showerror("Fehler", f"Ungültige Datei: {path}")
+            continue
+
+    messagebox.showinfo("Erfolgreich", "Transformation aller Dateien war erfolgreich.")
+
 
 root = tk.Tk()
 root.title("Bild-Daten-Transformation")
 
-label = tk.Label(root, text="Transformation eines (Grau-)Bilds (*.bmp, *.png, *.jpg) in eine Datendatei (*.txt) und umgekehrt")
+label = tk.Label(root,
+                 text="Transformation eines (Grau-)Bilds (*.bmp, *.png, *.jpg) in eine Datendatei (*.txt) und umgekehrt")
 label.pack(pady=10)
 
-upload_button = tk.Button(root, text="Datei hochladen", command=upload_file)
+upload_button = tk.Button(root, text="Dateien hochladen", command=upload_files)
 upload_button.pack(pady=20)
 
-file_label = tk.Label(root, text="Keine Datei ausgewählt")
-file_label.pack(pady=5)
+file_list_label = tk.Label(root, text="Keine Dateien ausgewählt")
+file_list_label.pack(pady=5)
 
 resolution_label = tk.Label(root, text="Wähle eine Auflösung (quadratisch):")
 resolution_label.pack(pady=10)
@@ -157,6 +163,6 @@ resolution_combobox.pack(pady=10)
 transform_button = tk.Button(root, text="Transformieren", command=transform)
 transform_button.pack(pady=20)
 
-file_path = ""
+file_paths = []
 
 root.mainloop()
