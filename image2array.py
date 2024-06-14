@@ -6,39 +6,20 @@ Created on 12th June 2024
 
 Nutzung:
 
-    Wenn man das Programm startet erscheint eine Benutzeroberflaeche, dort kann man eine Bilddatei
-    hochladen um diese in eine .txt-Datei zu konvertieren, welche das Bild als Array darstellt. Laedt man eine
-    solche .txt-Datei hoch, transformiert das Programe diese wieder zu einem Bild zurueck
+    Wenn man das Programm startet, erscheint eine Benutzeroberfläche, dort kann man eine Bilddatei
+    hochladen um diese in eine .txt-Datei zu konvertieren, welche das Bild als Array darstellt. Lädt man eine
+    solche .txt-Datei hoch, transformiert das Program diese wieder zu einem Bild zurück.
+
+    Upgrade in Version 1.1: Transformieren Button fungiert als Start Knopf
+    Upgrade in Version 1.2: Man kann nun mehrere Dateien gleichzeitig transformieren
 
 
 Installation:
 
-    Man benoetigt die verschiedenen Bibliotheken damit das Programm laeuft, dafür sollte man erstmal
-    versuchen diese ueber die IDE zu installieren (drüber hovern -> install package)
-    Es kann allerdings vorkommen, dass PIL (pillow) Probleme macht, Fix siehe 'PIL fix'
-
-
-PIL fix:
-
-    Folgenden Befehl in das Terminal schreiben:
-
-        'py -m pip install --upgrade Pillow'
-
-    Sollten hier Probleme auftreten wird es vermutlich an pip liegen, ab hier muss man individuell schauen was die
-    Fehlermeldungen sagen. Exemplarisch kann man unter 'pip fix' eine grobe Anleitung finden
-
-
-pip fix:
-
-    Zunaechst wechselt man im Terminal zu dem Ordner wo man lokal python gespeichert hat
-
-        'cd C:\\Users\\*username here*\\AppData\\Local\\Programs\\Python\\Python312\\' bei mir unter Windows
-
-    Danach installiert man pip (auch wieder im Terminal)
-
-        'py -m pip install --upgrade pip'
-
-    Danache sollte man Pillow installieren können
+    Man benötigt die verschiedenen Bibliotheken damit das Programm läuft, dafür sollte man erstmal
+    versuchen diese über die IDE zu installieren (darüber hovern → install package).
+    Es kann allerdings vorkommen, dass verschiedene Bibliotheken nicht installiert werden können, sollte das vorkommen,
+    gerne das GitHub Repository besuchen, da ist eine ausführlichere Anleitung zur Installation
 
 """
 
@@ -157,7 +138,7 @@ resolution_label.pack(pady=10)
 resolution_var = tk.StringVar()
 resolution_combobox = ttk.Combobox(root, textvariable=resolution_var, state="readonly")
 resolution_combobox['values'] = [2 ** x for x in range(4, 13)]
-resolution_combobox.current(2)  # Set default value to 16
+resolution_combobox.current(2)  # Set default value to 64
 resolution_combobox.pack(pady=10)
 
 transform_button = tk.Button(root, text="Transformieren", command=transform)
