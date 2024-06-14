@@ -6,8 +6,9 @@ Sollte das nicht funktionieren, kann man sich die verschiedenen Packete manuell 
 Unter Windows:
 
 ```
-Bitte eingenständig schauen wo Python lokal gespeichert ist (ggf in den Fehlermeldung gucken)
+Bitte selber schauen ob man das Directory wechseln muss zum installieren 
 
+Beispiel zum Wechseln (falls nötig)
 cd C:\Users\*username here*\AppData\Local\Programs\Python\Python312\
 
 py -m pip install --upgrade pip
