@@ -13,7 +13,7 @@ Nutzung:
 
 Installation:
 
-    Man benoetigt die verschiedenen Bibliotheken damit das Programm laueft, dafür sollte man erstmal
+    Man benoetigt die verschiedenen Bibliotheken damit das Programm laeuft, dafür sollte man erstmal
     versuchen diese ueber die IDE zu installieren (drüber hovern -> install package)
     Es kann allerdings vorkommen, dass PIL (pillow) Probleme macht, Fix siehe 'PIL fix'
 
@@ -157,7 +157,7 @@ resolution_label.pack(pady=10)
 resolution_var = tk.StringVar()
 resolution_combobox = ttk.Combobox(root, textvariable=resolution_var, state="readonly")
 resolution_combobox['values'] = [2 ** x for x in range(4, 13)]
-resolution_combobox.current(0)  # Set default value to 16
+resolution_combobox.current(2)  # Set default value to 16
 resolution_combobox.pack(pady=10)
 
 transform_button = tk.Button(root, text="Transformieren", command=transform)
