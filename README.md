@@ -1,7 +1,7 @@
 Installation 
 
-Man benötigt die verschiedenen Bibliotheken damit das Programm läuft, dafür sollte man erstmal versuchen diese über die IDE zu installieren (drüber hovern -> install package), ich empfehle hierfür PyCharm.
-Sollte das nicht funktionieren, kann man sich die verschiedenen Packete manuell installieren
+Man benötigt die verschiedenen Bibliotheken damit das Programm läuft, dafür sollte man erstmal versuchen diese über die IDE zu installieren (darüber hovern -> install package), ich empfehle hierfür PyCharm.
+Sollte das nicht funktionieren, kann man sich die verschiedenen Pakete manuell installieren
 
 Unter Windows:
 
@@ -23,7 +23,7 @@ Bitte selber schauen ob man das Directory wechseln muss zum installieren
 
 Danach:
   
-pyhton3 -m pip install --upgrade pip
+python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
 python3 -m pip install --upgrade numpy
 ```
